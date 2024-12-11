@@ -1,0 +1,124 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фильтр категорий</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px;
+        }
+
+        /* Стили кнопки */
+        .filter-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #6C63FF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: #5749d3;
+        }
+
+        /* Стили выпадающего списка */
+        .dropdown {
+            position: relative;
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dropdown select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Стили элементов категорий */
+        .item {
+            display: none; /* По умолчанию скрыты */
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .item p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Фильтрация достопримечательностей</h1>
+
+    <!-- Кнопка для отображения выпадающего списка -->
+    <button class="filter-btn" onclick="showDropdown()">Выбрать категорию</button>
+
+    <!-- Выпадающий список -->
+    <div class="dropdown" id="dropdown" style="display: none;">
+        <select id="categorySelect" onchange="filterItems()">
+            <option value="all">Все</option>
+            <option value="cultural">Культурные</option>
+            <option value="historical">Исторические</option>
+            <option value="natural">Природные</option>
+        </select>
+    </div>
+
+    <!-- Элементы категорий -->
+    <div class="item" data-category="cultural">Театр оперы и балета</div>
+    <div class="item" data-category="historical">Место дуэли Лермонтова</div>
+    <div class="item" data-category="natural">Гора Машук</div>
+    <div class="item" data-category="cultural">Галерея искусств</div>
+    <div class="item" data-category="historical">Памятник Лермонтову</div>
+    <div class="item" data-category="natural">Озеро Провал</div>
+
+    <script>
+        // Показать/скрыть выпадающий список
+        function showDropdown() {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Фильтрация элементов по категории
+        function filterItems() {
+            const selectedCategory = document.getElementById('categorySelect').value;
+            const items = document.querySelectorAll('.item');
+
+            // Перебираем все элементы
+            items.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                // Проверяем соответствие категории
+                if (selectedCategory === 'all' || itemCategory === selectedCategory) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Инициализация: показать все элементы при загрузке
+        window.onload = function() {
+            filterItems();
+        };
+    </script>
+</body>
